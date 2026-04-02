@@ -149,3 +149,48 @@ Config lives at `~/.config/email-mcp/config.toml` (XDG). Key sections:
 - `[[accounts]]` — `name`, `email`, `password`/`credential_source`/`oauth2`, `imap`, `smtp`
 - OAuth2 supports `flow = "device_code"` for M365 corporate accounts (no admin consent needed)
 - Environment variables override config file (prefix: `MCP_EMAIL_`)
+
+## Craft Agent Source Setup
+
+This fork is wired as a local MCP source in Craft Agent.
+
+### Source config
+
+The email source at `~/.craft-agent/workspaces/my-workspace/sources/email/config.json` points to the local build:
+
+```json
+{
+  "mcp": {
+    "transport": "stdio",
+    "command": "node",
+    "args": ["/Users/jeffhampton/dev/email-mcp/dist/main.js", "stdio"]
+  }
+}
+```
+
+### After pulling or editing code
+
+Always rebuild before the source will pick up changes:
+
+```bash
+cd ~/dev/email-mcp && pnpm build
+```
+
+### Adding a new email account
+
+```bash
+cd ~/dev/email-mcp && node dist/main.js account add
+```
+
+For M365 corporate accounts, select "Microsoft 365 Sign-In (Device Code)" — no IT exception needed.
+
+### Switching back to the npm package
+
+To revert to the upstream published version, change the source config command/args to:
+
+```json
+{
+  "command": "npx",
+  "args": ["-y", "@codefuturist/email-mcp", "stdio"]
+}
+```
