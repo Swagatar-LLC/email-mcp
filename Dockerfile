@@ -3,8 +3,7 @@ FROM node:24-slim AS builder
 
 WORKDIR /app
 
-# Enable pnpm via corepack
-RUN corepack enable && corepack prepare pnpm@9.15.0 --activate
+RUN npm install -g pnpm@9.15.0 --ignore-scripts
 
 # Install dependencies (layer cached unless lock changes)
 COPY package.json pnpm-lock.yaml ./

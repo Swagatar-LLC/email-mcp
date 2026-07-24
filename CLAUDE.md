@@ -33,7 +33,7 @@ Lefthook enforces this via pre-commit, commit-msg, and pre-push hooks.
 
 ```
 src/
-├── main.ts              # CLI entry point + MCP server bootstrap
+├── main.ts              # CLI entry point + MCP server bootstrap (stdio + Streamable HTTP transports)
 ├── server.ts            # McpServer factory (name, version, capabilities)
 ├── logging.ts           # MCP protocol logging bridge
 ├── cli/                 # CLI subcommands (account, setup, test, config, install, scheduler, notify)
